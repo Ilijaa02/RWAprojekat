@@ -1,31 +1,40 @@
 import { Injectable } from '@nestjs/common';
-import { AuthPayloadDto } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
-
-const fakeUsers = [
-    {
-        id: 1,
-        username: 'pera',
-        password: 'pera123',
-    },
-    {
-        id: 2,
-        username: 'mika',
-        password: 'mika123',
-    },
-]
+import * as bcrypt from 'bcrypt';
+import { UsersService } from 'src/entities/user/user.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { User } from 'src/entities/user/user.entity';
 
 @Injectable()
 export class AuthService {
 
-    constructor(private jwtService: JwtService) {}
+    constructor(private readonly jwtService: JwtService, private readonly userService: UsersService) { }
 
-    validateUser({ username, password }: AuthPayloadDto) {
-        const findUser = fakeUsers.find((user) => user.username == username);
-        if(!findUser) return null;
-        if(password === findUser.password){
-            const {password, ...user} = findUser;
-            return this.jwtService.sign(user);
+    async validateUser(username: string, password: string): Promise<string | null> {
+        const user = await this.userService.findOneByUsername(username);
+        if (user && await bcrypt.compare(password, user.password)) {
+            const { password, ...userData } = user;
+            return this.jwtService.sign(userData);
         }
+        return null;
+    }
+
+    async register(createUserDto: CreateUserDto): Promise<User> {
+        const { email, username, password } = createUserDto;
+        const existingUser = await this.userService.findOneByUsername(username);
+        if (existingUser) {
+            throw new Error('User already exists');
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUserDto = {
+            ...createUserDto,
+            password: hashedPassword
+        };
+
+        const newUser = await this.userService.create(newUserDto);
+
+        return newUser;
     }
 }
