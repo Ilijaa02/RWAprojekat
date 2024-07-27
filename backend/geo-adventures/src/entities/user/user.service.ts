@@ -20,4 +20,8 @@ export class UsersService {
         const newUser = this.usersRepository.create({ email, username, password });
         return this.usersRepository.save(newUser);
     }
+
+    async removeByUsername(username: string): Promise<void> {
+        await this.usersRepository.delete({ username });
+    }
 }

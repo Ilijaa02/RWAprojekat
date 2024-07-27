@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalGuard } from './guards/local.guard';
 import { Request } from 'express';
@@ -26,6 +26,12 @@ export class AuthController {
     @UseGuards(JwtAuthGuard)
     status(@Req() req: Request){
         return req.user;
+    }
+
+    @Delete('delete')
+    @UseGuards(JwtAuthGuard)
+    async delete(@Body('username') username: string): Promise<void>{
+        await this.authService.deleteUser(username);
     }
 
 }

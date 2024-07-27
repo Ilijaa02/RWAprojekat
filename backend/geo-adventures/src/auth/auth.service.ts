@@ -37,4 +37,8 @@ export class AuthService {
 
         return newUser;
     }
+
+    async deleteUser(username: string): Promise<void>{
+        await this.userService.removeByUsername(username);
+    }
 }
