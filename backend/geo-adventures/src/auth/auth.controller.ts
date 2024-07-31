@@ -4,7 +4,9 @@ import { LocalGuard } from './guards/local.guard';
 import { Request } from 'express';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from 'src/entities/user/user.entity';
+import { User, UserRole } from 'src/entities/user/user.entity';
+import { RolesGuard } from './guards/roles.guard';
+import { Roles } from './decorators/roles.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -29,7 +31,8 @@ export class AuthController {
     }
 
     @Delete('delete')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.ADMIN)
     async delete(@Body('username') username: string): Promise<void>{
         await this.authService.deleteUser(username);
     }
