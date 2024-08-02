@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn } from 'typeorm';
 import { User } from '../user/user.entity';
 import { Request } from '../request/request.entity';
 
@@ -12,6 +12,9 @@ export class Resource {
 
   @Column()
   description: string;
+
+  @CreateDateColumn()
+  createdAtL: Date;
 
   @ManyToOne(() => User, user => user.resources)
   user: User;
