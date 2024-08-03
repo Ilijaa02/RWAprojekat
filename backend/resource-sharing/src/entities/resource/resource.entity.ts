@@ -2,6 +2,12 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDat
 import { User } from '../user/user.entity';
 import { Request } from '../request/request.entity';
 
+export enum ResourceType {
+  ITEM = 'predmet',
+  SKILL = 'veština',
+  SPACE = 'prostor',
+}
+
 @Entity()
 export class Resource {
   @PrimaryGeneratedColumn()
@@ -12,6 +18,13 @@ export class Resource {
 
   @Column()
   description: string;
+
+  @Column({
+    type: 'enum',
+    enum: ResourceType,
+    default: ResourceType.ITEM,
+  })
+  type: ResourceType;
 
   @CreateDateColumn()
   createdAtL: Date;
