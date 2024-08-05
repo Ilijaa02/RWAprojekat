@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Resource } from './resource.entity';
+import { Resource, ResourceType } from './resource.entity';
 import { CreateResourceDto } from './dtos/create-resource.dto';
 import { UpdateResourceDto } from './dtos/update-resource.dto';
 import { User } from '../user/user.entity';
@@ -30,22 +30,26 @@ export class ResourceService {
 
     async findOne(id: number): Promise<Resource> {
         return this.resourceRepository
-          .createQueryBuilder('resource')
-          .where('resource.id = :id', { id })
-          .leftJoinAndSelect('resource.user', 'user')
-          .getOne();
-      }
+            .createQueryBuilder('resource')
+            .where('resource.id = :id', { id })
+            .leftJoinAndSelect('resource.user', 'user')
+            .getOne();
+    }
 
-      async update(id: number, updateResourceDto: UpdateResourceDto): Promise<Resource> {
+    async update(id: number, updateResourceDto: UpdateResourceDto): Promise<Resource> {
         await this.resourceRepository.update(id, updateResourceDto);
         return this.resourceRepository
-          .createQueryBuilder('resource')
-          .where('resource.id = :id', { id })
-          .leftJoinAndSelect('resource.user', 'user')
-          .getOne();
-      }
+            .createQueryBuilder('resource')
+            .where('resource.id = :id', { id })
+            .leftJoinAndSelect('resource.user', 'user')
+            .getOne();
+    }
 
     async remove(id: number): Promise<void> {
         await this.resourceRepository.delete(id);
+    }
+
+    async findAllByType(type: ResourceType): Promise<Resource[]> {
+        return this.resourceRepository.find({ where: { type }, relations: ['user'] });
     }
 }

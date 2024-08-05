@@ -4,11 +4,16 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ResourceModule } from './entities/resource/resource.module';
-import { UserController } from './entities/user/user.controller';
 import { RequestModule } from './entities/request/request.module';
+import { ResponseModule } from './entities/response/response.module';
+import { UserModule } from './entities/user/user.module';
+import { Response } from './entities/response/response.entity';
+import { Request } from './entities/request/request.entity';
+import { User } from './entities/user/user.entity';
+import { Resource } from './entities/resource/resource.entity';
 
 @Module({
-  controllers: [AppController, UserController],
+  controllers: [AppController],
   providers: [AppService],
   imports: [
     TypeOrmModule.forRoot({
@@ -18,13 +23,15 @@ import { RequestModule } from './entities/request/request.module';
       username: 'postgres',
       password: 'mypassword',
       database: 'postgres',
-      entities: [],
+      entities: [Response, Request, User, Resource],
       synchronize: true,
       autoLoadEntities: true,
     }),
     AuthModule,
     ResourceModule,
     RequestModule,
+    ResponseModule,
+    UserModule
   ],
 })
 export class AppModule {}

@@ -3,9 +3,9 @@ import { User } from '../user/user.entity';
 import { Request } from '../request/request.entity';
 
 export enum ResourceType {
-  ITEM = 'predmet',
-  SKILL = 'veština',
-  SPACE = 'prostor',
+  PREDMET = 'predmet',
+  VESTINA = 'vestina',
+  PROSTOR = 'prostor',
 }
 
 @Entity()
@@ -22,7 +22,7 @@ export class Resource {
   @Column({
     type: 'enum',
     enum: ResourceType,
-    default: ResourceType.ITEM,
+    default: ResourceType.PREDMET,
   })
   type: ResourceType;
 

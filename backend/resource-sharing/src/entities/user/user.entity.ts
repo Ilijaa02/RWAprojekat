@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Resource } from '../resource/resource.entity';
 import { Request } from '../request/request.entity';
+import { Response } from '../response/response.entity';
 
 export enum UserRole{
   USER = 'user',
@@ -33,4 +34,7 @@ export class User {
 
   @OneToMany(() => Request, request => request.user)
   requests: Request[];
+
+  @OneToMany(() => Response, response => response.user)
+  responses: Response[];
 }

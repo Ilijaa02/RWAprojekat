@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards, Req, ParseEnumPipe } from '@nestjs/common';
 import { ResourceService } from './resource.service';
 import { CreateResourceDto } from './dtos/create-resource.dto';
 import { UpdateResourceDto } from './dtos/update-resource.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ResourceType } from './resource.entity';
 
 @Controller('resources')
 export class ResourceController {
@@ -35,5 +36,10 @@ export class ResourceController {
     @Delete(':id')
     remove(@Param('id') id: number) {
         return this.resourceService.remove(id);
+    }
+
+    @Get('type/:type')
+    findByType(@Param('type', new ParseEnumPipe(ResourceType)) type: ResourceType) {
+        return this.resourceService.findAllByType(type);
     }
 }
