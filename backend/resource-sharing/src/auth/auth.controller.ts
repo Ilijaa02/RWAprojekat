@@ -16,7 +16,8 @@ export class AuthController {
     @Post('login')
     @UseGuards(LocalGuard)
     login(@Req() req: Request){
-        return req.user;
+        const token = req.user as string;
+        return {access_token: token};
     }
 
     @Post('register')
