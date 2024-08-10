@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-register',
-    templateUrl: './register.component.html',
-    // styleUrls: ['./register.component.css']
+    templateUrl: './register.component.html'
 })
 export class RegisterComponent {
     registerData = { email: '', username: '', password: '' };
@@ -16,7 +15,7 @@ export class RegisterComponent {
         this.authService.register(this.registerData).subscribe(
             (response) => {
                 console.log('User registered', response);
-                this.router.navigate(['/login']); // Preusmeravanje na stranicu za logovanje
+                this.router.navigate(['/login']);
             },
             (error) => {
                 console.error('Registration failed', error);

@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
-    templateUrl: './login.component.html',
-    // styleUrls: ['./login.component.css']
+    templateUrl: './login.component.html'
 })
 export class LoginComponent {
     loginData = { username: '', password: '' };
@@ -18,6 +17,7 @@ export class LoginComponent {
                 const token = response.access_token;
                 localStorage.setItem('token', token);
                 console.log("Successfully logged in, your token is: " + token);
+                this.loginData = { username: '', password: '' };
                 this.router.navigate(['/']);
             },
             (error) => {
