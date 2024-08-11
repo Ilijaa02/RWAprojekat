@@ -1,0 +1,19 @@
+<div class="container">
+    <h2>Add New Resource</h2>
+    <form (ngSubmit)="addResource()">
+        <label for="name">Name:</label>
+        <input type="text" id="name" [(ngModel)]="resourceData.name" name="name" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="resourceData.description" name="description" required></textarea>
+
+        <label for="type" class="lbl-type">Type:</label>
+        <select id="type" [(ngModel)]="resourceData.type" name="type" required>
+            <option value="predmet">Predmet</option>
+            <option value="vestina">Vestina</option>
+            <option value="prostor">Prostor</option>
+        </select>
+
+        <button type="submit" class="btn-submit">Add Resource</button>
+    </form>
+</div>

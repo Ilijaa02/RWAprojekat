@@ -18,7 +18,7 @@ export class LoginComponent {
                 localStorage.setItem('token', token);
                 console.log("Successfully logged in, your token is: " + token);
                 this.loginData = { username: '', password: '' };
-                this.router.navigate(['/']);
+                this.router.navigate(['/resources']);
             },
             (error) => {
                 console.error('Login failed', error);

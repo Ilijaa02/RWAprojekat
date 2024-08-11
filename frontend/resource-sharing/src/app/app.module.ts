@@ -7,12 +7,17 @@ import { AuthService } from './auth/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './auth/components/login.component';
 import { RegisterComponent } from './auth/components/register.component';
+import { ResourcesComponent } from './resources/resources.component';
+import { ResourceService } from './resources/resources.service';
+import { AddResourceComponent } from './add-resource/add-resource.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ResourcesComponent,
+    AddResourceComponent
   ],
   imports: [
     BrowserModule,
@@ -21,6 +26,7 @@ import { RegisterComponent } from './auth/components/register.component';
   ],
   providers: [
     AuthService,
+    ResourceService,
     provideHttpClient()
   ],
   bootstrap: [AppComponent]

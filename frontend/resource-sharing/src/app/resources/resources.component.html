@@ -1,0 +1,9 @@
+<div class="resource-container">
+    <button class="add-resource-button" (click)="navigateToAddResource()">Add New Resource</button>
+    <div *ngFor="let resource of resources" class="resource-card">
+        <h3>{{ resource.name }}</h3>
+        <p>{{ resource.description }}</p>
+        <p><strong>Type:</strong> {{ resource.type }}</p>
+        <p><strong>Owner:</strong> {{ resource.user.username }}</p>
+    </div>
+</div>
