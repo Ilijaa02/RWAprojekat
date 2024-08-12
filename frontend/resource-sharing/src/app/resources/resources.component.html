@@ -1,6 +1,8 @@
 <div class="resource-container">
     <button class="add-resource-button" (click)="navigateToAddResource()">Add New Resource</button>
     <div *ngFor="let resource of resources" class="resource-card">
+        <button *ngIf="userRole === 'admin' || isResourceOwner(resource)" class="edit-button" (click)="navigateToEditResource(resource.id)">Edit</button>
+    <button *ngIf="userRole === 'admin' || isResourceOwner(resource)" class="delete-button" (click)="deleteResource(resource.id)">X</button>
         <h3>{{ resource.name }}</h3>
         <p>{{ resource.description }}</p>
         <p><strong>Type:</strong> {{ resource.type }}</p>

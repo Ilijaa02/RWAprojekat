@@ -10,6 +10,7 @@ import { RegisterComponent } from './auth/components/register.component';
 import { ResourcesComponent } from './resources/resources.component';
 import { ResourceService } from './resources/resources.service';
 import { AddResourceComponent } from './add-resource/add-resource.component';
+import { EditResourceComponent } from './edit-resource/edit-resource.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AddResourceComponent } from './add-resource/add-resource.component';
     LoginComponent,
     RegisterComponent,
     ResourcesComponent,
-    AddResourceComponent
+    AddResourceComponent,
+    EditResourceComponent
   ],
   imports: [
     BrowserModule,
