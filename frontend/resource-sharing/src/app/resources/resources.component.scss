@@ -1,17 +1,13 @@
-.resource-container {
+.controls-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     gap: 1rem;
-    margin-top: 2rem; /* Daje malo prostora između dugmeta i kartica */
-    position: relative;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 .add-resource-button {
-    position: absolute;
-    top: -50px; /* Postavlja dugme iznad kartica */
-    left: 50%;
-    transform: translateX(-50%);
     background-color: #007bff;
     color: white;
     border: none;
@@ -22,6 +18,24 @@
     font-size: 16px;
 }
 
+.resource-type-select {
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.add-resource-button:hover {
+    background-color: #0056b3;
+}
+
+.resource-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
 .resource-card {
     background-color: white;
     padding: 1rem;
@@ -29,10 +43,6 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     width: 300px;
     position: relative;
-}
-
-.add-resource-button:hover {
-    background-color: #0056b3;
 }
 
 .delete-button {
@@ -55,4 +65,4 @@
     color: blue;
     font-size: 1.2rem;
     cursor: pointer;
-  }
+}

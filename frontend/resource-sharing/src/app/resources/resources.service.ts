@@ -56,4 +56,9 @@ export class ResourceService {
   
     return this.http.put<Resource>(`${this.apiUrl}/${id}`, resourceData, { headers });
   }
+
+  getResourcesByType(type: ResourceType): Observable<Resource[]> {
+    return this.http.get<Resource[]>(`${this.apiUrl}/type/${type}`);
+  }
+  
 }

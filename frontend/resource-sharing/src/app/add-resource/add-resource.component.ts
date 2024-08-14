@@ -8,10 +8,10 @@ import { ResourceService, ResourceType } from '../resources/resources.service';
   styleUrls: ['./add-resource.component.scss']
 })
 export class AddResourceComponent {
-  
+
   resourceData = { name: '', description: '', type: ResourceType.PREDMET };
 
-  constructor(private resourceService: ResourceService, private router: Router) {}
+  constructor(private resourceService: ResourceService, private router: Router) { }
 
   addResource() {
     this.resourceService.createResource(this.resourceData).subscribe(
