@@ -71,4 +71,8 @@ export class ResourcesComponent implements OnInit {
     }
   }
 
+  navigateToCreateRequest(resourceId?: number) {
+    this.router.navigate([`/requests/${resourceId}`]);
+  }
+
 }

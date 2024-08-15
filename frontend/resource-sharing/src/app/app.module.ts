@@ -11,6 +11,9 @@ import { ResourcesComponent } from './resources/resources.component';
 import { ResourceService } from './resources/resources.service';
 import { AddResourceComponent } from './add-resource/add-resource.component';
 import { EditResourceComponent } from './edit-resource/edit-resource.component';
+import { CreateRequestComponent } from './create-request/create-request.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RequestListComponent } from './request-list/request-list.component';
 
 @NgModule({
   declarations: [
@@ -19,12 +22,15 @@ import { EditResourceComponent } from './edit-resource/edit-resource.component';
     RegisterComponent,
     ResourcesComponent,
     AddResourceComponent,
-    EditResourceComponent
+    EditResourceComponent,
+    CreateRequestComponent,
+    RequestListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthService,

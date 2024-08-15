@@ -66,3 +66,13 @@
     font-size: 1.2rem;
     cursor: pointer;
 }
+
+.disabled-button {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+.disabled-button:disabled {
+    opacity: 0.6;
+}

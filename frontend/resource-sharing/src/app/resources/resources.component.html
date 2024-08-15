@@ -15,5 +15,6 @@
         <p>{{ resource.description }}</p>
         <p><strong>Type:</strong> {{ resource.type }}</p>
         <p><strong>Owner:</strong> {{ resource.user.username }}</p>
+        <button [class.disabled-button]="isResourceOwner(resource)" [disabled]="isResourceOwner(resource)" (click)="navigateToCreateRequest(resource.id)">Request Resource</button>
     </div>
 </div>

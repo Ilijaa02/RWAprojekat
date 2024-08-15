@@ -36,4 +36,10 @@ export class RequestController {
     remove(@Param('id') id: number) {
         return this.requestService.remove(id);
     }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('for-user/:username')
+    async findRequestsForUser(@Param('username') username: string, @Req() req) {
+        return this.requestService.findRequestsForUser(username);
+    }
 }

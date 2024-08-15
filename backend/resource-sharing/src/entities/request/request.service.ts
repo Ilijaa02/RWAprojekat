@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Request } from './request.entity';
 import { CreateRequestDto } from './dtos/create-request.dto';
 import { UpdateRequestDto } from './dtos/update-request.dto';
@@ -45,4 +45,27 @@ export class RequestService {
     async remove(id: number): Promise<void> {
         await this.requestRepository.delete(id);
     }
+
+    async findRequestsForUser(username: string): Promise<Request[]> {
+        const user = await this.userRepository.findOne({
+            where: { username },
+            relations: ['resources'] 
+        });
+    
+        if (!user) {
+            throw new Error('User not found');
+        }
+    
+        const resources = user.resources;
+    
+        return this.requestRepository.find({
+            where: {
+                resource: {
+                    id: In(resources.map(resource => resource.id))
+                }
+            },
+            relations: ['user', 'resource']
+        });
+    }
+    
 }

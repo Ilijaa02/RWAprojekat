@@ -1,0 +1,6 @@
+<form [formGroup]="requestForm" (ngSubmit)="submitRequest()">
+    <label for="message">Message:</label>
+    <input id="message" formControlName="message" type="text" required />
+
+    <button type="submit">Submit Request</button>
+</form>
