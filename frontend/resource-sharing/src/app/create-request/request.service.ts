@@ -33,4 +33,10 @@ export class RequestService {
     const headers = { 'Authorization': `Bearer ${token}` };
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers });
   }
+
+  getRequestsByUser(username: string): Observable<any[]> {
+    const token = localStorage.getItem('token');
+    const headers = { 'Authorization': `Bearer ${token}` };
+    return this.http.get<any[]>(`${this.apiUrl}/from-user/${username}`, { headers });
+  }
 }

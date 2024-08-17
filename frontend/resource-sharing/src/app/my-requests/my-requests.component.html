@@ -1,0 +1,10 @@
+<div class="my-requests-container">
+    <h2>My Requests</h2>
+    <ul>
+        <li *ngFor="let request of myRequests">
+            <p><strong>Message:</strong> {{ request.message }}</p>
+            <p><strong>Resource:</strong> {{ request.resource.name }}</p>
+            <p><strong>Created At:</strong> {{ request.createdAt | date }}</p>
+        </li>
+    </ul>
+</div>

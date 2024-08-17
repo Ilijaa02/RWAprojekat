@@ -4,7 +4,8 @@
     <a *ngIf="!authService.isLoggedIn()" routerLink="/register">Register</a>
 
     <a *ngIf="authService.isLoggedIn()" routerLink="/resources">Resources</a>
-    <a *ngIf="authService.isLoggedIn()" routerLink="/requests">My Requests</a>
+    <a *ngIf="authService.isLoggedIn()" routerLink="/requests">Requests</a>
+    <a *ngIf="authService.isLoggedIn()" routerLink="/my-requests">My Requests</a>
     <a *ngIf="authService.isLoggedIn()" (click)="logout()">Log off</a>
     <span *ngIf="authService.isLoggedIn()">User: {{ authService.getUsername() }}</span>
   </div>

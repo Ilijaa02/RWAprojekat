@@ -49,15 +49,15 @@ export class RequestService {
     async findRequestsForUser(username: string): Promise<Request[]> {
         const user = await this.userRepository.findOne({
             where: { username },
-            relations: ['resources'] 
+            relations: ['resources']
         });
-    
+
         if (!user) {
             throw new Error('User not found');
         }
-    
+
         const resources = user.resources;
-    
+
         return this.requestRepository.find({
             where: {
                 resource: {
@@ -67,5 +67,18 @@ export class RequestService {
             relations: ['user', 'resource']
         });
     }
-    
+
+    async findRequestsByUser(username: string): Promise<Request[]> {
+        const user = await this.userRepository.findOne({ where: { username } });
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        return this.requestRepository.find({
+            where: { user: user },
+            relations: ['resource']
+        });
+    }
+
 }

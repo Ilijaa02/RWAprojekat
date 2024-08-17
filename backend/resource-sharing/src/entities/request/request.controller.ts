@@ -42,4 +42,10 @@ export class RequestController {
     async findRequestsForUser(@Param('username') username: string, @Req() req) {
         return this.requestService.findRequestsForUser(username);
     }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('from-user/:username')
+    findRequestsByUser(@Param('username') username: string) {
+        return this.requestService.findRequestsByUser(username);
+    }
 }
