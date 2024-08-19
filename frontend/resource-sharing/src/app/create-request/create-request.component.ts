@@ -25,10 +25,10 @@ export class CreateRequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.resourceId = +params['id'];
+      this.resourceId = +params['resourceId'];
+      console.log('Resource ID:', this.resourceId);
     });
   }
-
 
   submitRequest() {
     if (this.requestForm.valid) {
@@ -37,12 +37,12 @@ export class CreateRequestComponent implements OnInit {
         resourceId: this.resourceId
       };
       console.log('Submitting request with payload:', requestPayload);
-  
+
       this.requestService.createRequest(requestPayload).subscribe(
         () => this.router.navigate(['/resources']),
         error => console.error('Request submission error:', error)
       );
     }
   }
-  
+
 }

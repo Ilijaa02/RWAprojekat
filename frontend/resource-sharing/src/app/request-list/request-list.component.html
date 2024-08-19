@@ -5,5 +5,12 @@
     <p><strong>Date:</strong> {{ request.createdAt | date:'short' }}</p>
     <p><strong>From:</strong> {{ request.user.username }}</p>
     <p><strong>Resource:</strong> {{ request.resource.name }}</p>
+
+    <button (click)="toggleResponseInput(request.id)">Respond</button>
+
+    <div *ngIf="request.showResponseInput">
+      <input [(ngModel)]="request.responseMessage" placeholder="Enter your response" />
+      <button (click)="submitResponse(request.id, request.responseMessage)">Submit</button>
+    </div>
   </div>
 </div>

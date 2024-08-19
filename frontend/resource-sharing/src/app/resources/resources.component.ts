@@ -31,9 +31,10 @@ export class ResourcesComponent implements OnInit {
       }
     );
   }
-
-  navigateToAddResource() {
-    this.router.navigate(['/add-resource']);
+  
+  navigateToAddResource(resourceId: number) {
+    console.log('Navigating to create request for resource ID:', resourceId);
+    this.router.navigate(['/requests', resourceId]);
   }
 
   deleteResource(resourceId?: number): void {

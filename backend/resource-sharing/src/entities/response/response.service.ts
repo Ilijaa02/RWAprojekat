@@ -30,11 +30,18 @@ export class ResponseService {
     }
 
     async findAll(): Promise<Response[]> {
-        return this.responseRepository.find({ relations: ['user', 'request'] });
+        return this.responseRepository.createQueryBuilder('response')
+            .leftJoinAndSelect('response.request', 'request')
+            .leftJoinAndSelect('request.user', 'user')
+            .getMany();
     }
 
     async findOne(id: number): Promise<Response> {
-        return this.responseRepository.findOne({ where: { id }, relations: ['user', 'request'] });
+        return this.responseRepository.createQueryBuilder('response')
+            .leftJoinAndSelect('response.request', 'request')
+            .leftJoinAndSelect('request.user', 'user')
+            .where('response.id = :id', { id })
+            .getOne();
     }
 
     async update(id: number, updateResponseDto: UpdateResponseDto): Promise<Response> {

@@ -15,6 +15,7 @@ import { CreateRequestComponent } from './create-request/create-request.componen
 import { ReactiveFormsModule } from '@angular/forms';
 import { RequestListComponent } from './request-list/request-list.component';
 import { MyRequestsComponent } from './my-requests/my-requests.component';
+import { ResponseListComponent } from './response-list/response-list.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MyRequestsComponent } from './my-requests/my-requests.component';
     EditResourceComponent,
     CreateRequestComponent,
     RequestListComponent,
-    MyRequestsComponent
+    MyRequestsComponent,
+    ResponseListComponent
   ],
   imports: [
     BrowserModule,

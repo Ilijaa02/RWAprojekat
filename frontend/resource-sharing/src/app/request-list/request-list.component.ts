@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RequestService } from '../create-request/request.service';
 import { AuthService } from '../auth/services/auth.service';
+import { ResponseService } from './response.service';
 
 @Component({
   selector: 'app-request-list',
@@ -12,7 +13,8 @@ export class RequestListComponent implements OnInit {
 
   constructor(
     private requestService: RequestService,
-    private authService: AuthService
+    private authService: AuthService,
+    private responseService: ResponseService
   ) { }
 
   ngOnInit(): void {
@@ -23,10 +25,30 @@ export class RequestListComponent implements OnInit {
     const username = this.authService.getUsername();
     this.requestService.getRequestsForUser(username!).subscribe(
       (requests: any[]) => {
-        console.log('Requests:', requests);
         this.requestList = requests;
+        this.requestList.forEach(request => request.showResponseInput = false);
       },
       error => console.error('Error loading requests:', error)
+    );
+  }
+
+  toggleResponseInput(requestId: number) {
+    const request = this.requestList.find(req => req.id === requestId);
+    if (request) {
+      request.showResponseInput = !request.showResponseInput;
+    }
+  }
+
+  submitResponse(requestId: number, message: string) {
+    this.responseService.createResponse(requestId, message).subscribe(
+      () => {
+        const request = this.requestList.find(req => req.id === requestId);
+        if (request) {
+          request.responseMessage = message;
+          request.showResponseInput = false;
+        }
+      },
+      error => console.error('Error submitting response:', error)
     );
   }
 

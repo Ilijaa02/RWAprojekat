@@ -8,6 +8,7 @@ import { EditResourceComponent } from './edit-resource/edit-resource.component';
 import { CreateRequestComponent } from './create-request/create-request.component';
 import { RequestListComponent } from './request-list/request-list.component';
 import { MyRequestsComponent } from './my-requests/my-requests.component';
+import { ResponseListComponent } from './response-list/response-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'requests/:resourceId', component: CreateRequestComponent },
   { path: 'requests', component: RequestListComponent },
   { path: 'my-requests', component: MyRequestsComponent },
+  { path: 'responses', component: ResponseListComponent },
   { path: '', redirectTo: '/resources', pathMatch: 'full' },
 ];
 
