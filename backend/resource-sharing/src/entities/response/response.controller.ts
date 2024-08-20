@@ -34,4 +34,9 @@ export class ResponseController {
     remove(@Param('id') id: string) {
         return this.responseService.remove(+id);
     }
+
+    @Get('user/:username')
+    findResponsesForUser(@Param('username') username: string) {
+        return this.responseService.findResponsesForUser(username);
+    }
 }

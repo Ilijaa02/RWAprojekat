@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ResponseService } from '../request-list/response.service';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-response-list',
@@ -9,15 +10,20 @@ import { ResponseService } from '../request-list/response.service';
 export class ResponseListComponent implements OnInit {
   responses: any[] = [];
 
-  constructor(private responseService: ResponseService) { }
+  constructor(
+    private responseService: ResponseService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.loadResponses();
   }
 
   loadResponses() {
-    this.responseService.getAllResponses().subscribe(
+    const username = this.authService.getUsername();
+    this.responseService.getResponsesForUser(username!).subscribe(
       (responses: any[]) => {
+        console.log('Loaded responses:', responses);
         this.responses = responses;
       },
       error => console.error('Error loading responses:', error)

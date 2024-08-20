@@ -52,4 +52,22 @@ export class ResponseService {
     async remove(id: number): Promise<void> {
         await this.responseRepository.delete(id);
     }
+
+    async findResponsesForUser(username: string): Promise<Response[]> {
+        const user = await this.userRepository.findOne({ where: { username } });
+    
+        if (!user) {
+            throw new Error('User not found');
+        }
+    
+        return this.responseRepository
+            .createQueryBuilder('response')
+            .innerJoinAndSelect('response.request', 'request')
+            .innerJoinAndSelect('request.resource', 'resource')
+            .innerJoinAndSelect('resource.user', 'resourceOwner')
+            .innerJoinAndSelect('request.user', 'requestUser')  // Dodaj ovo
+            .where('resourceOwner.id = :userId', { userId: user.id })
+            .getMany();
+    }
+
 }

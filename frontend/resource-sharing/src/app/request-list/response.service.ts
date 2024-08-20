@@ -20,12 +20,12 @@ export class ResponseService {
         return this.http.post<any>(this.baseUrl, response, { headers });
     }
 
-    getAllResponses(): Observable<any[]> {
+    getResponsesForUser(username: string): Observable<any[]> {
         const token = localStorage.getItem('token');
         const headers = new HttpHeaders({
             'Authorization': `Bearer ${token}`
         });
-
-        return this.http.get<any[]>(this.baseUrl, { headers });
+        return this.http.get<any[]>(`${this.baseUrl}/user/${username}`, { headers });
     }
+
 }

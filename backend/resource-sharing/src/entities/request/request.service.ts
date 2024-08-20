@@ -77,7 +77,7 @@ export class RequestService {
 
         return this.requestRepository.find({
             where: { user: user },
-            relations: ['resource']
+            relations: ['resource', 'resource.user']
         });
     }
 
