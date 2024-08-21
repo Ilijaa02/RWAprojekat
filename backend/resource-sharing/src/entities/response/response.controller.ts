@@ -39,4 +39,9 @@ export class ResponseController {
     findResponsesForUser(@Param('username') username: string) {
         return this.responseService.findResponsesForUser(username);
     }
+
+    @Get('received/:username')
+    findResponsesSentToUser(@Param('username') username: string) {
+        return this.responseService.findResponsesSentToUser(username);
+    }
 }

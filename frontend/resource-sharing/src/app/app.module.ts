@@ -16,6 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RequestListComponent } from './request-list/request-list.component';
 import { MyRequestsComponent } from './my-requests/my-requests.component';
 import { ResponseListComponent } from './response-list/response-list.component';
+import { ReceivedResponsesComponent } from './received-responses/received-responses.component';
+import { ResourceCardComponent } from './resource-card/resource-card.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { ResponseListComponent } from './response-list/response-list.component';
     CreateRequestComponent,
     RequestListComponent,
     MyRequestsComponent,
-    ResponseListComponent
+    ResponseListComponent,
+    ReceivedResponsesComponent,
+    ResourceCardComponent
   ],
   imports: [
     BrowserModule,

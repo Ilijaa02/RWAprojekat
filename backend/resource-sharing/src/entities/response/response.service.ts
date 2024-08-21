@@ -55,18 +55,34 @@ export class ResponseService {
 
     async findResponsesForUser(username: string): Promise<Response[]> {
         const user = await this.userRepository.findOne({ where: { username } });
-    
+
         if (!user) {
             throw new Error('User not found');
         }
-    
+
         return this.responseRepository
             .createQueryBuilder('response')
             .innerJoinAndSelect('response.request', 'request')
             .innerJoinAndSelect('request.resource', 'resource')
             .innerJoinAndSelect('resource.user', 'resourceOwner')
-            .innerJoinAndSelect('request.user', 'requestUser')  // Dodaj ovo
+            .innerJoinAndSelect('request.user', 'requestUser')
             .where('resourceOwner.id = :userId', { userId: user.id })
+            .getMany();
+    }
+
+    async findResponsesSentToUser(username: string): Promise<Response[]> {
+        const user = await this.userRepository.findOne({ where: { username } });
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        return this.responseRepository
+            .createQueryBuilder('response')
+            .innerJoinAndSelect('response.request', 'request')
+            .innerJoinAndSelect('request.user', 'requestUser')
+            .innerJoinAndSelect('response.user', 'responseUser')
+            .where('requestUser.id = :userId', { userId: user.id })
             .getMany();
     }
 

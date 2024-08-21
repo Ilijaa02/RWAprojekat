@@ -8,13 +8,8 @@
     </select>
 </div>
 <div class="resource-container">
-    <div *ngFor="let resource of filteredResources" class="resource-card">
-        <button *ngIf="userRole === 'admin' || isResourceOwner(resource)" class="edit-button" (click)="navigateToEditResource(resource.id)">Edit</button>
-        <button *ngIf="userRole === 'admin' || isResourceOwner(resource)" class="delete-button" (click)="deleteResource(resource.id)">X</button>
-        <h3>{{ resource.name }}</h3>
-        <p>{{ resource.description }}</p>
-        <p><strong>Type:</strong> {{ resource.type }}</p>
-        <p><strong>Owner:</strong> {{ resource.user.username }}</p>
-        <button [class.disabled-button]="isResourceOwner(resource)" [disabled]="isResourceOwner(resource)" (click)="navigateToCreateRequest(resource.id)">Request Resource</button>
-    </div>
+    <app-resource-card *ngFor="let resource of filteredResources" [resource]="resource" [userRole]="userRole"
+        (edit)="navigateToEditResource($event)" (delete)="deleteResource($event)"
+        (request)="navigateToCreateRequest($event)">
+    </app-resource-card>
 </div>

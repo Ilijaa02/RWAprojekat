@@ -31,7 +31,7 @@ export class ResourcesComponent implements OnInit {
       }
     );
   }
-  
+
   navigateToAddResource() {
     this.router.navigate(['/add-resource']);
   }
@@ -74,5 +74,4 @@ export class ResourcesComponent implements OnInit {
   navigateToCreateRequest(resourceId?: number) {
     this.router.navigate([`/requests/${resourceId}`]);
   }
-
 }

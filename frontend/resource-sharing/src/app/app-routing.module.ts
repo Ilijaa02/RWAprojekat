@@ -9,6 +9,7 @@ import { CreateRequestComponent } from './create-request/create-request.componen
 import { RequestListComponent } from './request-list/request-list.component';
 import { MyRequestsComponent } from './my-requests/my-requests.component';
 import { ResponseListComponent } from './response-list/response-list.component';
+import { ReceivedResponsesComponent } from './received-responses/received-responses.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'requests', component: RequestListComponent },
   { path: 'my-requests', component: MyRequestsComponent },
   { path: 'responses', component: ResponseListComponent },
+  { path: 'received-responses', component: ReceivedResponsesComponent },
   { path: '', redirectTo: '/resources', pathMatch: 'full' },
 ];
 

@@ -3,8 +3,7 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin: 2rem 0;
 }
 
 .add-resource-button {
@@ -16,6 +15,11 @@
     cursor: pointer;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.add-resource-button:hover {
+    background-color: #0056b3;
 }
 
 .resource-type-select {
@@ -25,54 +29,9 @@
     font-size: 16px;
 }
 
-.add-resource-button:hover {
-    background-color: #0056b3;
-}
-
 .resource-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
-}
-
-.resource-card {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    position: relative;
-}
-
-.delete-button {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background-color: transparent;
-    border: none;
-    color: red;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.edit-button {
-    position: absolute;
-    top: 8px;
-    right: 30px;
-    background-color: transparent;
-    border: none;
-    color: blue;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.disabled-button {
-    background-color: #cccccc;
-    color: #666666;
-    cursor: not-allowed;
-}
-
-.disabled-button:disabled {
-    opacity: 0.6;
 }
