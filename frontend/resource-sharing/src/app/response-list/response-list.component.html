@@ -1,7 +1,7 @@
 <div class="response-container">
   <div *ngFor="let response of responses" class="response-card">
     <div class="response-header">
-      <p class="response-date">{{ response.createdAt | date:'short' }}</p>
+      <p class="response-date">{{ response.createdAt | date:'dd.MM.yyyy' }}</p>
       <p><strong>Requested by:</strong> {{ response.request.user.username }}</p>
       <p><strong>Request:</strong> {{ response.request.message }}</p>
     </div>

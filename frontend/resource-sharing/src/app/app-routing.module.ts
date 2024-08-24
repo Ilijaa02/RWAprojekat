@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'my-requests', component: MyRequestsComponent },
   { path: 'responses', component: ResponseListComponent },
   { path: 'received-responses', component: ReceivedResponsesComponent },
-  { path: '', redirectTo: '/resources', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 
 @NgModule({

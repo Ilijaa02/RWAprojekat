@@ -1,7 +1,7 @@
 <div class="request-container">
   <div *ngFor="let request of requestList" class="request-card">
     <button class="delete-button" (click)="deleteRequest(request.id)">X</button>
-    <p><strong>Date:</strong> {{ request.createdAt | date:'short' }}</p>
+    <p><strong>Date:</strong> {{ request.createdAt | date:'dd.MM.yyyy' }}</p>
     <p><strong>From:</strong> {{ request.user.username }}</p>
     <p><strong>Message:</strong> {{ request.message }}</p>
     <p><strong>Resource:</strong> {{ request.resource.name }}</p>

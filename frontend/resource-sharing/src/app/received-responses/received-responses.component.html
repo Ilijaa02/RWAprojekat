@@ -1,9 +1,9 @@
 <div *ngIf="responses.length > 0; else noResponses">
     <div *ngFor="let response of responses" class="response-card">
         <p><strong>My message:</strong> {{ response.request.message }}</p>
-        <p><strong>Requested At:</strong> {{ response.request.createdAt | date:'short' }}</p>
+        <p><strong>Requested At:</strong> {{ response.request.createdAt | date:'dd.MM.yyyy' }}</p>
         <p><strong>Response:</strong> {{ response.message }}</p>
-        <p><strong>Responsed At:</strong> {{ response.createdAt | date:'short' }}</p>
+        <p><strong>Responsed At:</strong> {{ response.createdAt | date:'dd.MM.yyyy' }}</p>
     </div>
 </div>
 
