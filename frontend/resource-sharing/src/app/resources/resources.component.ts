@@ -1,7 +1,3 @@
-import { Store } from '@ngrx/store';
-import { AppState } from '../resources/store/app.state';
-import * as ResourcesActions from '../resources/store/resources.actions';
-import * as ResourcesSelectors from '../resources/store/resources.selectors';
 import { Component, OnInit } from '@angular/core';
 import { Resource, ResourceService, ResourceType } from '../resources/resources.service';
 import { Router } from '@angular/router';
@@ -20,26 +16,26 @@ export class ResourcesComponent implements OnInit {
   constructor(
     private resourceService: ResourceService,
     private router: Router,
-    private authService: AuthService,
-    private store: Store<AppState>
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(ResourcesActions.loadResources());
-    this.store.select(ResourcesSelectors.selectAll).subscribe(resources => {
-      this.resources = resources;
-      this.filteredResources = resources;
-    });
+    this.loadResources();
     this.userRole = this.authService.getUserRole();
   }
 
   loadResources() {
-    this.store.dispatch(ResourcesActions.loadResources());
+    this.resourceService.getAllResources().subscribe(resources => {
+      this.resources = resources;
+      this.filteredResources = resources;
+    });
   }
 
   deleteResource(resourceId?: number): void {
     if (confirm('Da li ste sigurni da želite da obrišete ovaj resurs?')) {
-      this.store.dispatch(ResourcesActions.deleteResource({ resourceId: resourceId! }));
+      this.resourceService.deleteResource(resourceId!).subscribe(() => {
+        this.loadResources();
+      });
     }
   }
 
@@ -48,14 +44,14 @@ export class ResourcesComponent implements OnInit {
     const type = selectElement.value as ResourceType;
 
     if (type) {
-      this.store.dispatch(ResourcesActions.filterResourcesByType({ resourceType: type }));
-    } else {
-      this.store.select(ResourcesSelectors.selectAll).subscribe(resources => {
+      this.resourceService.getResourcesByType(type).subscribe(resources => {
         this.filteredResources = resources;
       });
+    } else {
+      this.loadResources();
     }
   }
-  
+
   navigateToAddResource() {
     this.router.navigate(['/add-resource']);
   }

@@ -25,8 +25,8 @@ export class ResourceService {
 
   constructor(private http: HttpClient) { }
 
-  getAllResources(): Observable<any> {
-    return this.http.get(`${this.apiUrl}`);
+  getAllResources(): Observable<Resource[]> {
+    return this.http.get<Resource[]>(`${this.apiUrl}`);
   }
 
   createResource(resourceData: any): Observable<Resource> {
@@ -60,5 +60,4 @@ export class ResourceService {
   getResourcesByType(type: ResourceType): Observable<Resource[]> {
     return this.http.get<Resource[]>(`${this.apiUrl}/type/${type}`);
   }
-  
 }
