@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Resource, ResourceService, ResourceType } from '../resources/resources.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
+import { combineLatest, map, of, startWith, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-resources',
@@ -12,12 +13,13 @@ export class ResourcesComponent implements OnInit {
   resources: Resource[] = [];
   userRole: string | null = null;
   filteredResources: Resource[] = [];
+  selectedType: ResourceType | '' = '';
 
   constructor(
     private resourceService: ResourceService,
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadResources();
@@ -25,10 +27,21 @@ export class ResourcesComponent implements OnInit {
   }
 
   loadResources() {
-    this.resourceService.getAllResources().subscribe(resources => {
-      this.resources = resources;
-      this.filteredResources = resources;
-    });
+    const allResources$ = this.resourceService.getAllResources().pipe(
+      startWith([])
+    );
+    const filteredResources$ = of(this.selectedType).pipe(
+      switchMap(type =>
+        type ? this.resourceService.getResourcesByType(type) : allResources$
+      ),
+      startWith([])
+    );
+    combineLatest([allResources$, filteredResources$]).pipe(
+      map(([allResources, filteredResources]) => {
+        this.resources = allResources;
+        this.filteredResources = filteredResources;
+      })
+    ).subscribe();
   }
 
   deleteResource(resourceId?: number): void {
@@ -41,15 +54,9 @@ export class ResourcesComponent implements OnInit {
 
   filterResourcesByType(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
-    const type = selectElement.value as ResourceType;
+    this.selectedType = selectElement.value as ResourceType;
 
-    if (type) {
-      this.resourceService.getResourcesByType(type).subscribe(resources => {
-        this.filteredResources = resources;
-      });
-    } else {
-      this.loadResources();
-    }
+    this.loadResources();
   }
 
   navigateToAddResource() {
