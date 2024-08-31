@@ -13,3 +13,21 @@
         (request)="navigateToCreateRequest($event)">
     </app-resource-card>
 </div>
+
+
+
+<!-- <div class="controls-container">
+    <button class="add-resource-button" (click)="navigateToAddResource()">Add New Resource</button>
+    <select class="resource-type-select" (change)="filterResourcesByType($event)">
+        <option value="">Svi resursi</option>
+        <option value="predmet">Predmet</option>
+        <option value="vestina">Veština</option>
+        <option value="prostor">Prostor</option>
+    </select>
+</div>
+<div class="resource-container">
+    <app-resource-card *ngFor="let resource of filteredResources$ | async" [resource]="resource" [userRole]="userRole"
+        (edit)="navigateToEditResource($event)" (delete)="deleteResource($event)"
+        (request)="navigateToCreateRequest($event)">
+    </app-resource-card>
+</div> -->

@@ -18,6 +18,10 @@ import { MyRequestsComponent } from './my-requests/my-requests.component';
 import { ResponseListComponent } from './response-list/response-list.component';
 import { ReceivedResponsesComponent } from './received-responses/received-responses.component';
 import { ResourceCardComponent } from './resource-card/resource-card.component';
+// import { StoreModule } from '@ngrx/store';
+// import { EffectsModule } from '@ngrx/effects';
+// import { resourcesReducer } from '../app/resources/store/resources.reducer';
+// import { ResourceEffects } from '../app/resources/store/resources.effects';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,9 @@ import { ResourceCardComponent } from './resource-card/resource-card.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // StoreModule.forRoot(resourcesReducer),
+    // EffectsModule.forRoot([ResourceEffects])
   ],
   providers: [
     AuthService,

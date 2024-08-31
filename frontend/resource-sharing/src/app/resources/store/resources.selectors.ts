@@ -1,20 +1,25 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { ResourcesState } from './resources.reducer';
-import { Resource } from '../resources.service';
+import { adapter, ResourcesState } from './resources.reducer';
+import { Resource, ResourceType } from '../resources.service';
 
-const adapter: EntityAdapter<Resource> = createEntityAdapter<Resource>();
+interface FilterProps {
+  type: ResourceType | '';
+}
 
 export const selectResourcesState = createFeatureSelector<ResourcesState>('resources');
 
 export const {
-    selectAll,
-    selectEntities,
-    selectIds,
-    selectTotal
+  selectAll: selectAllResources,
+  selectEntities: selectResourceEntities,
+  selectIds: selectResourceIds,
+  selectTotal: selectResourceTotal,
 } = adapter.getSelectors(selectResourcesState);
 
-export const selectResourceError = createSelector(
-    selectResourcesState,
-    (state: ResourcesState) => state.error
+export const selectResourceById = (id: number) =>
+  createSelector(selectResourceEntities, entities => entities[id]);
+
+export const selectFilteredResources = createSelector(
+  selectAllResources,
+  (resources: Resource[], props: FilterProps) =>
+    resources.filter(resource => resource.type === props.type)
 );
