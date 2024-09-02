@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,10 +18,11 @@ import { MyRequestsComponent } from './my-requests/my-requests.component';
 import { ResponseListComponent } from './response-list/response-list.component';
 import { ReceivedResponsesComponent } from './received-responses/received-responses.component';
 import { ResourceCardComponent } from './resource-card/resource-card.component';
-// import { StoreModule } from '@ngrx/store';
-// import { EffectsModule } from '@ngrx/effects';
-// import { resourcesReducer } from '../app/resources/store/resources.reducer';
-// import { ResourceEffects } from '../app/resources/store/resources.effects';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { resourcesReducer } from './resources/store/resources.reducer';
+import * as effects from './resources/store/resources.effects';
 
 @NgModule({
   declarations: [
@@ -43,8 +44,9 @@ import { ResourceCardComponent } from './resource-card/resource-card.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    // StoreModule.forRoot(resourcesReducer),
-    // EffectsModule.forRoot([ResourceEffects])
+    StoreModule.forRoot({ resources: resourcesReducer }, {}),
+    EffectsModule.forRoot(effects),
+    StoreDevtoolsModule.instrument({ maxAge: 100, logOnly: !isDevMode() }),
   ],
   providers: [
     AuthService,

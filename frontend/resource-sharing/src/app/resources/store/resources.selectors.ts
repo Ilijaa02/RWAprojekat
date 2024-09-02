@@ -20,6 +20,10 @@ export const selectResourceById = (id: number) =>
 
 export const selectFilteredResources = createSelector(
   selectAllResources,
-  (resources: Resource[], props: FilterProps) =>
-    resources.filter(resource => resource.type === props.type)
+  (resources: Resource[], props: FilterProps) => {
+    if (!props.type) {
+      return resources;
+    }
+    return resources.filter(resource => resource.type === props.type);
+  }
 );
