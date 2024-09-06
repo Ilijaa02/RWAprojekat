@@ -23,6 +23,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { resourcesReducer } from './resources/store/resources.reducer';
 import * as effects from './resources/store/resources.effects';
+import { AccountsComponent } from './accounts/accounts.component';
+import { AccountsService } from './accounts/accounts.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import * as effects from './resources/store/resources.effects';
     MyRequestsComponent,
     ResponseListComponent,
     ReceivedResponsesComponent,
-    ResourceCardComponent
+    ResourceCardComponent,
+    AccountsComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +54,7 @@ import * as effects from './resources/store/resources.effects';
   providers: [
     AuthService,
     ResourceService,
+    AccountsService,
     provideHttpClient()
   ],
   bootstrap: [AppComponent]

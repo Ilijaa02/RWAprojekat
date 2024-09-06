@@ -7,11 +7,12 @@ import { CreateUserDto } from '../entities/user/dtos/create-user.dto';
 import { User, UserRole } from 'src/entities/user/user.entity';
 import { RolesGuard } from './guards/roles.guard';
 import { Roles } from './decorators/roles.decorator';
+import { UsersService } from '../entities/user/user.service';
 
 @Controller('auth')
 export class AuthController {
 
-    constructor(private readonly authService: AuthService) {}
+    constructor(private readonly authService: AuthService, private readonly userService: UsersService) {}
 
     @Post('login')
     @UseGuards(LocalGuard)
@@ -36,6 +37,13 @@ export class AuthController {
     @Roles(UserRole.ADMIN)
     async delete(@Body('username') username: string): Promise<void>{
         await this.authService.deleteUser(username);
+    }
+
+    @Get()
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(UserRole.ADMIN)
+    async findAll(): Promise<User[]> {
+        return this.userService.findAll();
     }
 
 }

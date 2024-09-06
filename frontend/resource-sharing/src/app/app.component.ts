@@ -10,24 +10,24 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'resource-sharing';
   menuOpen = false;
+  userRole: string | null = null;
 
   constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    const isAppInitialized = localStorage.getItem('isAppInitialized');
-
-    if (!isAppInitialized) {
-      this.logout();
-      localStorage.setItem('isAppInitialized', 'true');
-      this.router.navigate(['/login']);
-    }
+    this.userRole = this.authService.getUserRole();
   }
 
   logout(){
     this.authService.logout();
+    this.userRole = null;
   }
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+
+  isAdmin(): boolean {
+    return this.userRole === 'admin';
   }
 }
