@@ -27,6 +27,12 @@ export class RequestListComponent implements OnInit {
       (requests: any[]) => {
         this.requestList = requests;
         this.requestList.forEach(request => request.showResponseInput = false);
+
+        requests.forEach(request => {
+          if (!request.isRead) {
+            this.requestService.markAsRead(request.id).subscribe();
+          }
+        });
       },
       error => console.error('Error loading requests:', error)
     );

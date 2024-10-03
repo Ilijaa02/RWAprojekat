@@ -1,6 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Resource } from '../resources/resources.service';
+
+export interface Request {
+  id?: number;
+  message: string;
+  createdAt?: Date;
+  resourceId: number;
+  resource?: Resource;
+  user?: any;
+  response?: any;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +49,21 @@ export class RequestService {
     const token = localStorage.getItem('token');
     const headers = { 'Authorization': `Bearer ${token}` };
     return this.http.get<any[]>(`${this.apiUrl}/from-user/${username}`, { headers });
+  }
+
+  getUnreadCount(username: string): Observable<number> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<number>(`${this.apiUrl}/unread-count/${username}`, { headers });
+  }
+
+  markAsRead(id: number): Observable<void> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.patch<void>(`${this.apiUrl}/${id}/read`, {}, { headers });
   }
 }

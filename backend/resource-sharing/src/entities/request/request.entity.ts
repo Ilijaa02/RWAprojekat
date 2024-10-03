@@ -17,6 +17,9 @@ export class Request {
   @Column()
   resourceId: number;
 
+  @Column({ default: false })
+  isRead: boolean;
+
   @ManyToOne(() => User, user => user.requests)
   user: User;
 

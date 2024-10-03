@@ -81,4 +81,27 @@ export class RequestService {
         });
     }
 
+    async countUnreadRequestsForUsername(username: string): Promise<number> {
+        const user = await this.userRepository.findOne({ where: { username } });
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const resources = await this.resourceRepository.find({ where: { user } });
+
+        const unreadRequestsCount = await this.requestRepository.count({
+            where: {
+                resourceId: In(resources.map(resource => resource.id)),
+                isRead: false,
+            },
+        });
+
+        return unreadRequestsCount;
+    }
+
+    async markAsRead(id: number): Promise<void> {
+        await this.requestRepository.update(id, { isRead: true });
+    }
+
 }

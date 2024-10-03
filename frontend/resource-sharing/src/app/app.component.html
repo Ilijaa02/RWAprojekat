@@ -10,7 +10,10 @@
       <a *ngIf="!authService.isLoggedIn()" routerLink="/register">Register</a>
 
       <a *ngIf="authService.isLoggedIn()" routerLink="/resources">Resources</a>
-      <a *ngIf="authService.isLoggedIn()" routerLink="/requests">Requests</a>
+      <a *ngIf="authService.isLoggedIn()" routerLink="/requests">
+        Requests
+        <span *ngIf="unreadRequestCount > 0" class="badge">{{ unreadRequestCount }}</span>
+      </a>
       <a *ngIf="authService.isLoggedIn()" routerLink="/my-requests">My Requests</a>
       <a *ngIf="authService.isLoggedIn()" routerLink="/received-responses">Responses</a>
       <a *ngIf="authService.isLoggedIn()" routerLink="/responses">My Responses</a>

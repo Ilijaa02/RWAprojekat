@@ -3,6 +3,7 @@ import { RequestService } from './request.service';
 import { CreateRequestDto } from './dtos/create-request.dto';
 import { UpdateRequestDto } from './dtos/update-request.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { Patch } from '@nestjs/common';
 
 @Controller('requests')
 export class RequestController {
@@ -47,5 +48,17 @@ export class RequestController {
     @Get('from-user/:username')
     findRequestsByUser(@Param('username') username: string) {
         return this.requestService.findRequestsByUser(username);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('unread-count/:username')
+    async getUnreadCount(@Param('username') username: string): Promise<number> {
+        return this.requestService.countUnreadRequestsForUsername(username);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Patch(':id/read')
+    async markAsRead(@Param('id') id: number): Promise<void> {
+        return this.requestService.markAsRead(id);
     }
 }
