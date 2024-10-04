@@ -9,6 +9,7 @@ import { AuthService } from '../auth/services/auth.service';
 })
 export class ReceivedResponsesComponent implements OnInit {
   responses: any[] = [];
+  hoverRating: number = 0;
 
   constructor(
     private responseService: ResponseService,
@@ -34,5 +35,25 @@ export class ReceivedResponsesComponent implements OnInit {
     } else {
       console.error('Username is null. Cannot fetch responses.');
     }
+  }
+
+  rateUser(userId: number, rating: number): void {
+    this.responseService.rateUser(userId, rating).subscribe(
+      () => {
+        console.log('User rated successfully.');
+        this.loadResponses();
+      },
+      error => {
+        console.error('Error rating user:', error);
+      }
+    );
+  }
+
+  setHoverRating(star: number) {
+    this.hoverRating = star;
+  }
+
+  resetHoverRating() {
+    this.hoverRating = 0;
   }
 }

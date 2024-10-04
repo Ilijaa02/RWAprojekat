@@ -86,4 +86,17 @@ export class ResponseService {
             .getMany();
     }
 
+    async rateUser(userId: number, rating: number): Promise<User> {
+        const user = await this.userRepository.findOne({ where: { id: userId } });
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        user.numberOfRatings += 1;
+        user.rating = ((user.rating * (user.numberOfRatings - 1)) + rating) / user.numberOfRatings;
+
+        return this.userRepository.save(user);
+    }
+
 }

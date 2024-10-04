@@ -44,4 +44,10 @@ export class ResponseController {
     findResponsesSentToUser(@Param('username') username: string) {
         return this.responseService.findResponsesSentToUser(username);
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('rate/:userId')
+    rateUser(@Param('userId') userId: string, @Body('rating') rating: number) {
+        return this.responseService.rateUser(+userId, rating);
+    }
 }

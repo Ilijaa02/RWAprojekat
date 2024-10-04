@@ -29,6 +29,12 @@ export class User {
   })
   role: UserRole
 
+  @Column({ type: 'float', default: 0 })
+  rating: number;
+
+  @Column({ type: 'int', default: 0 })
+  numberOfRatings: number;
+
   @OneToMany(() => Resource, resource => resource.user)
   resources: Resource[];
 

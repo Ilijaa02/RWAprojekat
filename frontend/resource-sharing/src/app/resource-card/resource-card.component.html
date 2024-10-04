@@ -10,6 +10,7 @@
         <p>{{ resource.description }}</p>
         <p><strong>Type:</strong> {{ resource.type }}</p>
         <p><strong>Owner:</strong> {{ resource.user.username }}</p>
+        <p><strong>Rating:</strong> {{ resource.user.rating }}</p>
     </div>
     <button [class.disabled-button]="isResourceOwner()" [disabled]="isResourceOwner()"
         (click)="request.emit(resource.id)">
