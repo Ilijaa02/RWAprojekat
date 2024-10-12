@@ -37,11 +37,11 @@ export class ReceivedResponsesComponent implements OnInit {
     }
   }
 
-  rateUser(userId: number, rating: number): void {
-    this.responseService.rateUser(userId, rating).subscribe(
+  rateUser(userId: number, rating: number, responseId: number): void {
+    this.responseService.rateUser(userId, rating, responseId).subscribe(
       () => {
         console.log('User rated successfully.');
-        this.loadResponses();
+        this.responses = this.responses.filter(response => response.id !== responseId);
       },
       error => {
         console.error('Error rating user:', error);

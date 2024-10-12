@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 export enum ResourceType {
   PREDMET = 'predmet',
@@ -59,5 +59,13 @@ export class ResourceService {
 
   getResourcesByType(type: ResourceType): Observable<Resource[]> {
     return this.http.get<Resource[]>(`${this.apiUrl}/type/${type}`);
+  }
+
+  getResourcesSortedByRating(): Observable<Resource[]> {
+    return this.getAllResources().pipe(
+      map((resources) => {
+        return resources.sort((a, b) => b.user.rating - a.user.rating);
+      })
+    );
   }
 }

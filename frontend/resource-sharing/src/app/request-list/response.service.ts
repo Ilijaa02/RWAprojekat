@@ -36,12 +36,12 @@ export class ResponseService {
         return this.http.get<any[]>(`${this.baseUrl}/received/${username}`, { headers });
     }
 
-    rateUser(userId: number, rating: number): Observable<any> {
+    rateUser(userId: number, rating: number, responseId: number): Observable<any> {
         const token = localStorage.getItem('token');
         const headers = new HttpHeaders({
             'Authorization': `Bearer ${token}`
         });
-        return this.http.post<any>(`${this.baseUrl}/rate/${userId}`, { rating }, { headers });
+        return this.http.post<any>(`${this.baseUrl}/rate/${userId}`, { rating, responseId }, { headers });
     }
 
 }

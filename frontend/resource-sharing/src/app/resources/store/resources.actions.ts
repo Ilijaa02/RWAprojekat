@@ -41,3 +41,13 @@ export const filterResourcesByType = createAction(
     '[Resource] Filter Resources By Type',
     props<{ resourceType: ResourceType }>()
 );
+
+export const loadSortedResourcesByRating = createAction('[Resource] Load Sorted Resources By Rating');
+export const loadSortedResourcesByRatingSuccess = createAction(
+    '[Resource] Load Sorted Resources By Rating Success',
+    props<{ resources: Resource[] }>()
+);
+export const loadSortedResourcesByRatingFailure = createAction(
+    '[Resource] Load Sorted Resources By Rating Failure',
+    props<{ error: string }>()
+);

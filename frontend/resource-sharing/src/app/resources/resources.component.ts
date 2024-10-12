@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../resources/store/app.state';
-import { loadResources, deleteResource, filterResourcesByType } from '../resources/store/resources.actions';
-import { selectFilteredResources, selectAllResources } from '../resources/store/resources.selectors';
+import { loadResources, deleteResource, filterResourcesByType, loadSortedResourcesByRating } from '../resources/store/resources.actions';
+import { selectFilteredResources, selectAllResources, selectSortedResourcesByRating } from '../resources/store/resources.selectors';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -49,6 +49,12 @@ export class ResourcesComponent implements OnInit {
 
     this.store.dispatch(filterResourcesByType({ resourceType: this.selectedType }));
     this.filteredResources$ = this.store.select(selectFilteredResources, { type: this.selectedType });
+  }
+
+  sortResourcesByRating() {
+    console.log("Sort by rating clicked");
+    this.store.dispatch(loadSortedResourcesByRating());
+    this.resources$ = this.store.select(selectSortedResourcesByRating);
   }
 
   navigateToAddResource() {

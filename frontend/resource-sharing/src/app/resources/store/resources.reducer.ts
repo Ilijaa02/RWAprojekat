@@ -20,6 +20,9 @@ export const resourcesReducer = createReducer(
   on(ResourceActions.loadResourcesSuccess, (state, { resources }) =>
     adapter.setAll(resources, state)
   ),
+  on(ResourceActions.loadSortedResourcesByRatingSuccess, (state, { resources }) =>
+    adapter.setAll(resources, state)
+  ),
   on(ResourceActions.loadResourcesFailure, (state, { error }) => ({
     ...state,
     error,

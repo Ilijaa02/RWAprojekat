@@ -47,7 +47,7 @@ export class ResponseController {
 
     @UseGuards(JwtAuthGuard)
     @Post('rate/:userId')
-    rateUser(@Param('userId') userId: string, @Body('rating') rating: number) {
-        return this.responseService.rateUser(+userId, rating);
+    rateUser(@Param('userId') userId: string, @Body('rating') rating: number, @Body('responseId') responseId: number) {
+        return this.responseService.rateUser(+userId, rating, responseId);
     }
 }

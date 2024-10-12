@@ -52,4 +52,13 @@ export class ResourceService {
     async findAllByType(type: ResourceType): Promise<Resource[]> {
         return this.resourceRepository.find({ where: { type }, relations: ['user'] });
     }
+
+    async findAllSortedByUserRating(): Promise<Resource[]> {
+        return this.resourceRepository
+            .createQueryBuilder('resource')
+            .leftJoinAndSelect('resource.user', 'user')
+            .orderBy('user.rating', 'DESC')
+            .getMany();
+    }
+
 }

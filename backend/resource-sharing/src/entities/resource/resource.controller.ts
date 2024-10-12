@@ -42,4 +42,10 @@ export class ResourceController {
     findByType(@Param('type', new ParseEnumPipe(ResourceType)) type: ResourceType) {
         return this.resourceService.findAllByType(type);
     }
+
+    @Get('sorted-by-rating')
+    findAllSortedByRating() {
+        return this.resourceService.findAllSortedByUserRating();
+    }
+
 }

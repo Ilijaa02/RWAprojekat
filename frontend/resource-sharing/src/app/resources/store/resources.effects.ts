@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ResourceService } from '../resources.service';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { loadResources, loadResourcesSuccess, loadResourcesFailure, deleteResource, deleteResourceSuccess, deleteResourceFailure } from './resources.actions';
+import { loadResources, loadResourcesSuccess, loadResourcesFailure, deleteResource, deleteResourceSuccess, deleteResourceFailure, loadSortedResourcesByRating, loadSortedResourcesByRatingSuccess, loadSortedResourcesByRatingFailure } from './resources.actions';
 
 export const loadResources$ = createEffect(
   (action$ = inject(Actions), resourceService = inject(ResourceService)) => {
@@ -34,6 +34,21 @@ export const deleteResource$ = createEffect(
         resourceService.deleteResource(resourceId).pipe(
           map(() => deleteResourceSuccess({ resourceId })),
           catchError(err => of(deleteResourceFailure({ error: err.message })))
+        )
+      )
+    );
+  },
+  { functional: true }
+);
+
+export const loadSortedResourcesByRating$ = createEffect(
+  (actions$ = inject(Actions), resourceService = inject(ResourceService)) => {
+    return actions$.pipe(
+      ofType(loadSortedResourcesByRating),
+      switchMap(() =>
+        resourceService.getResourcesSortedByRating().pipe(
+          map((resources) => loadSortedResourcesByRatingSuccess({ resources })),
+          catchError((err) => of(loadSortedResourcesByRatingFailure({ error: err.message })))
         )
       )
     );

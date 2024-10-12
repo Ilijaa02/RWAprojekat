@@ -9,7 +9,7 @@
         <div class="rating">
             <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
                 <span class="star" 
-                      (click)="rateUser(response.user.id, star)"
+                      (click)="rateUser(response.user.id, star, response.id)"
                       (mouseenter)="setHoverRating(star)"
                       (mouseleave)="resetHoverRating()"
                       [ngClass]="{

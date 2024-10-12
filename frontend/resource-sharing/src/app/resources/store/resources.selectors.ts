@@ -27,3 +27,8 @@ export const selectFilteredResources = createSelector(
     return resources.filter(resource => resource.type === props.type);
   }
 );
+
+export const selectSortedResourcesByRating = createSelector(
+  selectAllResources,
+  (resources: Resource[]) => resources.sort((a, b) => b.user.rating - a.user.rating)
+);

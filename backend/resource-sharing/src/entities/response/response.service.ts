@@ -86,7 +86,7 @@ export class ResponseService {
             .getMany();
     }
 
-    async rateUser(userId: number, rating: number): Promise<User> {
+    async rateUser(userId: number, rating: number, responseId: number): Promise<User> {
         const user = await this.userRepository.findOne({ where: { id: userId } });
 
         if (!user) {
@@ -95,8 +95,11 @@ export class ResponseService {
 
         user.numberOfRatings += 1;
         user.rating = ((user.rating * (user.numberOfRatings - 1)) + rating) / user.numberOfRatings;
+        await this.userRepository.save(user);
+        
+        await this.responseRepository.delete(responseId);
 
-        return this.userRepository.save(user);
+        return user;
     }
 
 }
