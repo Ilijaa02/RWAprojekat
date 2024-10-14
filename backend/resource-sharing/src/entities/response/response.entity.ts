@@ -13,6 +13,9 @@ export class Response {
   @CreateDateColumn()
   createdAt: Date;
 
+  @Column({ default: false })
+  isRead: boolean;
+
   @ManyToOne(() => User, user => user.responses)
   user: User;
 

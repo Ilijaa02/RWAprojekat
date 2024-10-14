@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Response } from './response.entity';
 import { CreateResponseDto } from './dtos/create-response.dto';
 import { User } from '../user/user.entity';
 import { Request } from '../request/request.entity';
 import { UpdateResponseDto } from './dtos/update-response.dto';
+import { Resource } from '../resource/resource.entity';
 
 @Injectable()
 export class ResponseService {
@@ -16,6 +17,8 @@ export class ResponseService {
         private userRepository: Repository<User>,
         @InjectRepository(Request)
         private requestRepository: Repository<Request>,
+        @InjectRepository(Resource)
+        private resourceRepository: Repository<Resource>
     ) { }
 
     async create(createResponseDto: CreateResponseDto, username: string): Promise<Response> {
@@ -96,10 +99,40 @@ export class ResponseService {
         user.numberOfRatings += 1;
         user.rating = ((user.rating * (user.numberOfRatings - 1)) + rating) / user.numberOfRatings;
         await this.userRepository.save(user);
-        
+
         await this.responseRepository.delete(responseId);
 
         return user;
+    }
+
+    async countUnreadResponsesForUsername(username: string): Promise<number> {
+        // Pronađi korisnika na osnovu username-a
+        const user = await this.userRepository.findOne({ where: { username } });
+    
+        if (!user) {
+            throw new Error('User not found');
+        }
+    
+        // Pronađi sve zahteve koje je korisnik poslao
+        const requests = await this.requestRepository.find({
+            where: {
+                user: user,  // Samo zahtevi koje je korisnik poslao
+            },
+        });
+    
+        // Pronađi broj nepročitanih odgovora na te zahteve
+        const unreadResponsesCount = await this.responseRepository.count({
+            where: {
+                request: In(requests.map(request => request.id)),  // Odgovori vezani za ove zahteve
+                isRead: false,  // Samo nepročitani odgovori
+            },
+        });
+    
+        return unreadResponsesCount;
+    }
+    
+    async markAsRead(id: number): Promise<void> {
+        await this.responseRepository.update(id, { isRead: true });
     }
 
 }

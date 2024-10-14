@@ -44,4 +44,20 @@ export class ResponseService {
         return this.http.post<any>(`${this.baseUrl}/rate/${userId}`, { rating, responseId }, { headers });
     }
 
+    getUnreadCount(username: string): Observable<number> {
+        const token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`
+        });
+        return this.http.get<number>(`${this.baseUrl}/unread-count/${username}`, { headers });
+    }
+
+    markAsRead(id: number): Observable<void> {
+        const token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`
+        });
+        return this.http.patch<void>(`${this.baseUrl}/${id}/read`, {}, { headers });
+    }
+
 }

@@ -22,11 +22,22 @@ export class ReceivedResponsesComponent implements OnInit {
 
   loadResponses(): void {
     const username = this.authService.getUsername();
-
     if (username) {
       this.responseService.getReceivedResponses(username).subscribe(
-        data => {
-          this.responses = data;
+        (responses: any[]) => {
+          this.responses = responses;
+          responses.forEach(response => {
+            if (!response.isRead) {
+              this.responseService.markAsRead(response.id).subscribe(
+                () => {
+                  console.log(`Response with id ${response.id} marked as read.`);
+                },
+                error => {
+                  console.error(`Error marking response with id ${response.id} as read:`, error);
+                }
+              );
+            }
+          });
         },
         error => {
           console.error('Error loading responses:', error);

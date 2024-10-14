@@ -3,6 +3,7 @@ import { ResponseService } from './response.service';
 import { CreateResponseDto } from './dtos/create-response.dto';
 import { UpdateResponseDto } from './dtos/update-response.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('responses')
 export class ResponseController {
@@ -49,5 +50,17 @@ export class ResponseController {
     @Post('rate/:userId')
     rateUser(@Param('userId') userId: string, @Body('rating') rating: number, @Body('responseId') responseId: number) {
         return this.responseService.rateUser(+userId, rating, responseId);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('unread-count/:username')
+    async getUnreadCount(@Param('username') username: string): Promise<number> {
+        return this.responseService.countUnreadResponsesForUsername(username);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Patch(':id/read')
+    async markAsRead(@Param('id') id: number): Promise<void> {
+        return this.responseService.markAsRead(id);
     }
 }
