@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../resources/store/app.state';
 import { loadResources, deleteResource, filterResourcesByType, loadSortedResourcesByRating } from '../resources/store/resources.actions';
 import { selectFilteredResources, selectAllResources, selectSortedResourcesByRating } from '../resources/store/resources.selectors';
-import { Observable } from 'rxjs';
+import { combineLatest, map, Observable, startWith, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-resources',
@@ -19,13 +19,28 @@ export class ResourcesComponent implements OnInit {
   userRole: string | null = null;
   selectedType: ResourceType | '' = '';
 
+  private searchName$ = new Subject<string>();
+  private searchOwner$ = new Subject<string>();
+
   constructor(
     private store: Store<AppState>,
     private router: Router,
     private authService: AuthService
   ) {
     this.resources$ = this.store.select(selectAllResources);
-    this.filteredResources$ = this.store.select(selectFilteredResources, { type: this.selectedType });
+    this.filteredResources$ = combineLatest([
+      this.resources$,
+      this.searchName$.pipe(startWith('')),
+      this.searchOwner$.pipe(startWith('')),
+      this.store.select(selectFilteredResources, { type: this.selectedType })
+    ]).pipe(
+      map(([resources, name, owner]) =>
+        resources.filter(resource =>
+          resource.name.toLowerCase().includes(name.toLowerCase()) &&
+          resource.user.username.toLowerCase().includes(owner.toLowerCase())
+        )
+      )
+    );
   }
 
   ngOnInit(): void {
@@ -67,5 +82,15 @@ export class ResourcesComponent implements OnInit {
 
   navigateToCreateRequest(resourceId?: number) {
     this.router.navigate([`/requests/${resourceId}`]);
+  }
+
+  onSearchNameChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    this.searchName$.next(inputElement.value);
+  }
+
+  onSearchOwnerChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    this.searchOwner$.next(inputElement.value);
   }
 }

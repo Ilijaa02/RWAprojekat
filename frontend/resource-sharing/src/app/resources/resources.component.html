@@ -7,6 +7,8 @@
         <option value="vestina">Veština</option>
         <option value="prostor">Prostor</option>
     </select>
+    <input type="text" placeholder="Search by resource" (input)="onSearchNameChange($event)" />
+    <input type="text" placeholder="Search by owner" (input)="onSearchOwnerChange($event)" />
 </div>
 <div class="resource-container">
     <app-resource-card *ngFor="let resource of filteredResources$ | async" [resource]="resource" [userRole]="userRole"
